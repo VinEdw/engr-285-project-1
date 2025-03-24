@@ -368,13 +368,13 @@ def create_simulation_plots(game_array_list, fname):
     fig.suptitle("Wa-Tor Populations")
 
     # Plot each population over time
-    axes[0].plot(range(actual_steps), fish_counts, label='fish')
-    axes[0].plot(range(actual_steps), shark_counts, label='sharks')
+    axes[0].plot(range(actual_steps), fish_counts, label="fish")
+    axes[0].plot(range(actual_steps), shark_counts, label="sharks")
     axes[0].legend()
     axes[0].set(xlabel="", ylabel="Population")
 
     # Plot each population against the other
-    axes[1].plot(fish_counts, shark_counts, marker='.')
+    axes[1].plot(fish_counts, shark_counts, marker=".")
     axes[1].set(xlabel="Fish Population", ylabel="Shark Population")
 
     fig.savefig(fname)
