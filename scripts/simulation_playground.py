@@ -10,7 +10,7 @@ dims = (30, 40)         # Size of the simulation window
 initial_fish = 300      # Starting number of fish
 initial_sharks = 100    # Starting number of sharks
 steps = 500             # Time duration of the simulation
-start_energy = 9        # Maximum number of stored steps a shark begins with
+start_energy = 9        # Number of moves a child shark begins with
 use_basic_setup = True  # Whether to use a random initial distribution (or not)
 
 # Initialize the game array
