@@ -9,3 +9,21 @@
   date: datetime(year: 2025, month: 4, day: 13),
 )
 
+= Lotka-Volterra Model (LVM)
+
+= Types of Simulation Outcomes
+
+= Conditions for Good Modeling
+
+= Main Simulation Parameters
+
+== `breed_time`
+
+== `energy_gain`
+
+== `breed_energy`
+
+= Circular Initialization
+
+= Extension
+
