@@ -29,7 +29,7 @@
   )
 
   // Style raw blocks
-  show raw: it => block(fill: rgb("#E6E6E6"), inset: 0.6em, width: 100%, it)
+  show raw.where(block: true): it => block(fill: rgb("#E6E6E6"), inset: 0.6em, width: 100%, it)
 
   // Title
   stack(
