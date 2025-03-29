@@ -2,7 +2,7 @@ parameters = {
     "breed_time": 3,
     "energy_gain": 4,
     "breed_energy": 10,
-    "dims": (40, 60),
+    "dims": (50, 50),
     "initial_fish": 300,
     "initial_sharks": 100,
     "steps": 500,
