@@ -20,8 +20,6 @@ def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, sta
     for k in range(steps):
         game_array = step_game(game_array, breed_time, energy_gain, breed_energy, start_energy)
         game_array_list.append(game_array)
-        fish_count = count_fish(game_array)
-        shark_count = count_sharks(game_array)
 
         # Print the current progress if the percentage has changed
         if print_progress:
