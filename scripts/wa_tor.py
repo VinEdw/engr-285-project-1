@@ -241,6 +241,7 @@ def check_if_fish_fill_board(game_array):
     """
     Return whether all creatures in the game array are fish.
     In other words, whether the fish have filled the board.
+    This happens when the sharks go extinct.
     """
     fish_count = count_fish(game_array)
     return fish_count == game_array.size
