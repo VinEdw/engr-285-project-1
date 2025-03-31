@@ -282,6 +282,61 @@ def get_fish_occupied_adjacent_locations(game_array, i, j):
             fish_occupied_locs.append(loc)
     return fish_occupied_locs
 
+def find_local_maxima(x_values, y_values):
+    """
+    Return the x values where y is at a local maximum.
+    To deal with noise, chunk the data into sections.
+    A section starts once values go above some threshold of the range, and it ends when values go below another threshold of the range.
+    Return the list of critical x values.
+    """
+    y_range = np.ptp(y_values)
+    x_crit_list = []
+
+    y_chunk_start = y_range / 4
+    y_chunk_end = y_range / 5
+    inside_y_chunk = False
+    y_max = 0
+    x_crit = 0
+
+    # Walk through each (x, y) pair
+    for x, y in zip(x_values, y_values):
+        # Check if we are inside a y chunk
+        if inside_y_chunk:
+            # If we are still above the end threshold, keep going
+            if y > y_chunk_end:
+                # Check if this y value is the biggest we have seen so far
+                if y > y_max:
+                    y_max = y
+                    x_crit = x
+            # Otherwise, we need to save the critical value and leave the chunk
+            else:
+                x_crit_list.append(x_crit)
+                inside_y_chunk = False
+                # Reset the max y value
+                y_max = 0
+                x_crit = 0
+        # Otherwise, check if we have entered a y chunk
+        elif y > y_chunk_start:
+            inside_y_chunk = True
+
+    return x_crit_list
+
+def calculate_critical_points(game_array_list):
+    """
+    Calculate the critical points (x = a/b, y = d/c) given a list of game arrays.
+    When x is at a local maximum, y = d/c.
+    When y is at a local maximum, x = a/b.
+    To estimate the ratios, average the x or y values found at each local maxima.
+    Return the estimates for (a/b, d/c).
+    """
+    fish_counts = [count_fish(game_array) for game_array in game_array_list]
+    shark_counts = [count_sharks(game_array) for game_array in game_array_list]
+
+    x_crit_list = find_local_maxima(fish_counts, shark_counts)
+    y_crit_list = find_local_maxima(shark_counts, fish_counts)
+
+    return np.mean(x_crit_list), np.mean(y_crit_list)
+
 # Functions to help with comparing/combining lists
 
 def list_intersection(list_1, list_2):
