@@ -417,7 +417,7 @@ def get_preferred_shark_moves(old_board: Board, new_board: Board, i: int, j: int
     new_locs = new_board.get_fish_occupied_adjacent_locations(i, j)
     return list_union(old_locs, new_locs)
 
-def find_local_maxima(x_values, y_values):
+def find_local_maxima(x_values: list[int], y_values: list[int]) -> list[int]:
     """
     Return the x values where y is at a local maximum.
     To deal with noise, chunk the data into sections.
@@ -456,16 +456,16 @@ def find_local_maxima(x_values, y_values):
 
     return x_crit_list
 
-def calculate_critical_points(game_array_list):
+def calculate_critical_points(game_board_list: list[Board]):
     """
-    Calculate the critical points (x = a/b, y = d/c) given a list of game arrays.
+    Calculate the critical points (x = a/b, y = d/c) given a list of game boards.
     When x is at a local maximum, y = d/c.
     When y is at a local maximum, x = a/b.
     To estimate the ratios, average the x or y values found at each local maxima.
     Return the estimates for (a/b, d/c).
     """
-    fish_counts = [count_fish(game_array) for game_array in game_array_list]
-    shark_counts = [count_sharks(game_array) for game_array in game_array_list]
+    fish_counts = [game_board.fish_count() for game_board in game_board_list]
+    shark_counts = [game_board.shark_count() for game_board in game_board_list]
 
     x_crit_list = find_local_maxima(fish_counts, shark_counts)
     y_crit_list = find_local_maxima(shark_counts, fish_counts)
