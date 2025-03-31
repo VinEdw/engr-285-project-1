@@ -199,18 +199,18 @@ def initialize_game_array_circular(game_array, initial_fish, initial_sharks, bre
 
 # Functions for randomization
 
-def create_random_location_sequence(array):
+def create_random_location_sequence(board: Board) -> list[tuple[int]]:
     """
-    Create a list of (i, j) indices for each location in the array.
+    Create a list of (i, j) indices for each location in the board with given dimensions.
     Return them in a random order.
     """
     # Randomly generate a sequence of positions in the array
     # Cells are numbered starting at 0 in the upper left corner, increasing by 1 as you move right then down
-    N = array.size
+    N = board.size()
     positions = rng.choice(N, N, replace=False)
     # Map each position to an (i, j) pair
     coordinates = []
-    cols = array.shape[1]
+    cols = board.dims[1]
     for pos in positions:
         i = pos // cols
         j = pos % cols
