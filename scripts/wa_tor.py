@@ -295,7 +295,7 @@ def step_game(old_board: Board, breed_time: int, energy_gain: int, breed_energy:
     new_board.remove_inactive_creatures()
     return new_board
 
-# Functions for game array initialization
+# Functions for game board initialization
 
 def initialize_game_board_randomly(game_board: Board, initial_fish: int, initial_sharks: int, breed_time: int, breed_energy: int):
     """
@@ -347,7 +347,7 @@ def initialize_game_board_circular(game_board: Board, initial_fish: int, initial
                 game_board.creatures.append(Shark(i, j, initial_energy))
             # Check if the position is within the surrounding fish ring
             elif x**2 + y**2 < (initial_sharks + initial_fish) / np.pi:
-                # Place a fish in the game array with a random time
+                # Place a fish in the game board with a random time
                 initial_time = generate_random_fish_time(breed_time)
                 game_board.creatures.append(Fish(i, j, initial_time))
 
