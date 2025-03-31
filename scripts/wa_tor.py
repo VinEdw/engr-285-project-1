@@ -223,7 +223,7 @@ def choose_random_location(locs: list[tuple[int]]) -> tuple[int]:
     """
     return tuple(rng.choice(locs))
 
-def generate_random_fish_time(breed_time):
+def generate_random_fish_time(breed_time: int) -> int:
     """
     Return a random initial time for a fish.
     """
