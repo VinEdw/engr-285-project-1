@@ -5,6 +5,13 @@ import matplotlib.pyplot as plt # Library needed to plot results
 import imageio.v2 as io         # Library for converting a collection of image files to a gif
 rng = np.random.default_rng()   # Random number generator
 
+# Classes to hold the creatures (fish and sharks)
+
+class Creature:
+    def __init__(self, i: int, j: int) -> None:
+        self.i = i
+        self.j = j
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
