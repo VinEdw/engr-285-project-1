@@ -8,9 +8,10 @@ import random as rand           # Library for generating random numbers
 # Classes to hold the creatures (fish and sharks)
 
 class Creature:
-    def __init__(self, i: int, j: int) -> None:
+    def __init__(self, i: int, j: int, active: bool = True) -> None:
         self.i = i
         self.j = j
+        self.active = active
 
     def __repr__(self) -> str:
         return f"Creature({self.i}, {self.j})"
