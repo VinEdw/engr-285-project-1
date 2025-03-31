@@ -12,6 +12,10 @@ class Creature:
         self.i = i
         self.j = j
 
+    def __repr__(self) -> str:
+        return f"Creature({self.i}, {self.j})"
+
+
 class Fish(Creature):
     def __init__(self, i: int, j: int, time: int) -> None:
         super().__init__(i, j)
