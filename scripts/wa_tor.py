@@ -217,7 +217,7 @@ def create_random_location_sequence(board: Board) -> list[tuple[int]]:
         coordinates.append((i, j))
     return coordinates
 
-def choose_random_location(locs):
+def choose_random_location(locs: list[tuple[int]]) -> tuple[int]:
     """
     Return a random location (i, j) in the given list of locations.
     """
