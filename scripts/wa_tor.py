@@ -150,38 +150,43 @@ def step_game(old_array, breed_time, energy_gain, breed_energy, start_energy):
 
 # Functions for game array initialization
 
+def initialize_game_board_randomly(game_board: Board, initial_fish: int, initial_sharks: int, breed_time: int, breed_energy: int):
     """
-def initialize_game_array_randomly(game_array, initial_fish, initial_sharks, breed_time, breed_energy):
-    """
-    Randomly fill the game array with the given number of fish and sharks.
+    Randomly fill the game board with the given number of fish and sharks.
     Each fish will be given a random time.
     Each shark will be given a random amount of energy.
     """
     # Check that there are enough spaces to fit all the fish and sharks
     initial_creatures = initial_fish + initial_sharks
-    assert game_array.size >= initial_creatures
-    # Randomly place fish then sharks into the game array
-    locs = create_random_location_sequence(game_array)
+    assert game_board.size() >= initial_creatures
+    # Randomly place fish then sharks into the game board
+    locs = create_random_location_sequence(game_board)
     for i in range(initial_creatures):
         loc = locs[i]
         if i < initial_fish:
             # Generate a random initial time for fish
-            initial_value = generate_random_fish_time(breed_time)
+            initial_time = generate_random_fish_time(breed_time)
+            creature = Fish(loc[0], loc[1], initial_time)
         else:
             # Generate a random initial energy for sharks
-            initial_value = generate_random_shark_energy(breed_energy)
-        # Place the creature in the game array
-        game_array[loc] = initial_value
+            initial_energy = generate_random_shark_energy(breed_energy)
+            creature = Shark(loc[0], loc[1], initial_energy)
+        # Place the creature in the game board
+        game_board.creatures.append(creature)
 
-def initialize_game_array_circular(game_array, initial_fish, initial_sharks, breed_time, breed_energy):
+def initialize_game_board_circular(game_board: Board, initial_fish: int, initial_sharks: int, breed_time: int, breed_energy: int):
     """
-    Fill the game array with the given number of fish and sharks in a circular pattern.
+    Fill the game board with the given number of fish and sharks in a circular pattern.
     Populate a central disk with sharks, and surround them with a ring of fish.
     Each fish will be given a random time.
     Each shark will be given a random amount of energy.
     """
-    rows = game_array.shape[0]
-    cols = game_array.shape[1]
+    # Check that there are enough spaces to fit all the fish and sharks
+    initial_creatures = initial_fish + initial_sharks
+    assert game_board.size() >= initial_creatures
+    # Calculate where the board center is
+    rows = game_board.dims[0]
+    cols = game_board.dims[1]
     row_center = rows / 2
     col_center = cols / 2
     for i in range(rows):
@@ -190,12 +195,14 @@ def initialize_game_array_circular(game_array, initial_fish, initial_sharks, bre
             x = j - col_center
             # Check if the position is within the central shark disk
             if x**2 + y**2 < initial_sharks / np.pi:
-                # Place a shark in the game array with a random energy
-                game_array[i, j] = generate_random_shark_energy(breed_energy)
+                # Place a shark in the game board with a random energy
+                initial_energy = generate_random_shark_energy(breed_energy)
+                game_board.creatures.append(Shark(i, j, initial_energy))
             # Check if the position is within the surrounding fish ring
             elif x**2 + y**2 < (initial_sharks + initial_fish) / np.pi:
                 # Place a fish in the game array with a random time
-                game_array[i, j] = generate_random_fish_time(breed_time)
+                initial_time = generate_random_fish_time(breed_time)
+                game_board.creatures.append(Fish(i, j, initial_time))
 
 # Functions for randomization
 
