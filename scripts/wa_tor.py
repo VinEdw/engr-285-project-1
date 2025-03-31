@@ -150,12 +150,7 @@ def step_game(old_array, breed_time, energy_gain, breed_energy, start_energy):
 
 # Functions for game array initialization
 
-def create_empty_game_array(dims):
     """
-    Create an empty game array (filled with zeros) with the given dimensions.
-    """
-    return np.zeros(dims, dtype=int)
-
 def initialize_game_array_randomly(game_array, initial_fish, initial_sharks, breed_time, breed_energy):
     """
     Randomly fill the game array with the given number of fish and sharks.
