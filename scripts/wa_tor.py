@@ -115,6 +115,16 @@ class Board:
         """
         return self.fish_count() == self.size()
 
+    def get_active_creature_at_location(self, i: int, j: int) -> Creature|None:
+        """
+        Return the first active creature found at the given location in the board.
+        If no creature could be found, return None.
+        """
+        for creature in self.creatures:
+            if creature.active and (creature.i == i) and (creature.j == j):
+                return creature
+        return None
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
