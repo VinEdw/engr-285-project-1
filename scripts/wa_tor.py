@@ -72,6 +72,15 @@ class Board:
             creatures = []
         self.creatures = creatures
 
+    def __copy__(self):
+        cloned_creatures = []
+        for creature in self.creatures:
+            if isinstance(creature, Fish):
+                cloned_creatures.append(Fish(creature.i, creature.j, creature.time))
+            elif isinstance(creature, Shark):
+                cloned_creatures.append(Shark(creature.i, creature.j, creature.energy))
+        return Board(self.dims, cloned_creatures)
+
     def size(self):
         return self.dims[0] * self.dims[1]
 
@@ -199,7 +208,7 @@ def step_game(old_board: Board, breed_time: int, energy_gain: int, breed_energy:
     Return a new game board with the updates.
     """
     # Copy the old board to avoid overwriting the original
-    old_board = copy.deepcopy(old_board)
+    old_board = copy.copy(old_board)
     # Create a new board to return with the updates
     new_board = Board(old_board.dims)
 
