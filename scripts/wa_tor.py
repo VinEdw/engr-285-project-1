@@ -553,13 +553,13 @@ def create_simulation_animation(game_board_list: list[Board], fname: str, fps: i
     img_data = [create_image_array(game_board) for game_board in game_board_list]
     io.mimwrite(fname, img_data, format=".gif", fps=fps)
 
-def create_simulation_plots(game_array_list, fname):
+def create_simulation_plots(game_board_list: list[Board], fname: str):
     """
     Create plots describing the simulation 
     """
-    actual_steps = len(game_array_list)
-    fish_counts = [count_fish(game_array) for game_array in game_array_list]
-    shark_counts = [count_sharks(game_array) for game_array in game_array_list]
+    actual_steps = len(game_board_list)
+    fish_counts = [game_board.fish_count() for game_board in game_board_list]
+    shark_counts = [game_board.shark_count() for game_board in game_board_list]
 
     fig, axes = plt.subplots(2, 1)
     fig.suptitle("Wa-Tor Populations")
