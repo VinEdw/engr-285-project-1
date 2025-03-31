@@ -545,12 +545,12 @@ def create_image_array(game_board: Board):
 
     return result
 
-def create_simulation_animation(game_array_list, fname, fps=20):
+def create_simulation_animation(game_board_list: list[Board], fname: str, fps: int = 20):
     """
     Create a gif file animating the simulation.
-    Pass in a list of game arrays and the desired file name.
+    Pass in a list of game boards and the desired file name.
     """
-    img_data = [create_image_array(game_array) for game_array in game_array_list]
+    img_data = [create_image_array(game_board) for game_board in game_board_list]
     io.mimwrite(fname, img_data, format=".gif", fps=fps)
 
 def create_simulation_plots(game_array_list, fname):
