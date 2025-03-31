@@ -22,6 +22,18 @@ class Shark(Creature):
         super().__init__(i, j)
         self.energy = energy
 
+# Class to store the board
+
+class Board:
+    def __init__(self, dims: list[int], creatures: None|list[Creature] = None):
+        self.dims = dims
+        if creatures is None:
+            creatures = []
+        self.creatures = creatures
+
+    def size(self):
+        return self.dims[0] * self.dims[1]
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
