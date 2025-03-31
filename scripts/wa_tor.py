@@ -36,7 +36,7 @@ class Shark(Creature):
 # Class to store the board
 
 class Board:
-    def __init__(self, dims: tuple[int, int], creatures: None|list[Creature] = None):
+    def __init__(self, dims: tuple[int, int], creatures: list[Creature]|None = None):
         self.dims = dims
         if creatures is None:
             creatures = []
