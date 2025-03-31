@@ -506,9 +506,9 @@ def create_simulation_paramater_str(dims: tuple[int, int], breed_time: int, ener
     initial_conditions = f"{initial_sharks},{initial_fish}"
     return f"{dimensions}_({paramaters})_({initial_conditions})"
 
-def create_image_array(game_array):
+def create_image_array(game_board: Board):
     """
-    Return the game array converted into a format for visual display.
+    Return the game board converted into a format for visual display.
     Each cell is given a different color:
     - empty: white
     - fish: red
@@ -516,24 +516,32 @@ def create_image_array(game_array):
     The cell is translated into a 16x16 square of the RGB value for its color.
     """
     square_width = 16
-    rows = game_array.shape[0] * square_width
-    cols = game_array.shape[1] * square_width
-    result = np.zeros((rows, cols, 3), dtype="uint8")
     empty_color = np.array([255, 255, 255], dtype="uint8")
     fish_color = np.array([255, 0, 0], dtype="uint8")
     shark_color = np.array([0, 0, 255], dtype="uint8")
 
-    for i, row in enumerate(game_array):
+    rows = game_board.dims[0] * square_width
+    cols = game_board.dims[1] * square_width
+    result = np.zeros((rows, cols, 3), dtype="uint8")
+
+    # Start the result array filled with empty squares
+    result[:,:] = empty_color
+
+    # Draw the color of each creature in the result array
+    for creature in game_board.creatures:
+        i = creature.i
+        j = creature.j
         row_range = slice(i*square_width, (i + 1)*square_width)
-        for j, cell_value in enumerate(row):
-            col_range = slice(j*square_width, (j + 1)*square_width)
-            if cell_value > 0:
-                color = fish_color  # Fish are positive
-            elif cell_value < 0:
-                color = shark_color # Sharks are negative
-            else:
-                color = empty_color # Empty spaces are 0
-            result[row_range, col_range, :] = color
+        col_range = slice(j*square_width, (j + 1)*square_width)
+
+        if isinstance(creature, Fish):
+            color = fish_color
+        elif isinstance(creature, Shark):
+            color = shark_color
+        else:
+            color = empty_color
+
+        result[row_range, col_range, :] = color
 
     return result
 
