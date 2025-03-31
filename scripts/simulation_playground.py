@@ -13,22 +13,22 @@ steps = 500             # Time duration of the simulation
 start_energy = 9        # Number of moves a child shark begins with
 use_basic_setup = True  # Whether to use a random initial distribution (or not)
 
-# Initialize the game array
-initial_game_array = wa_tor.create_empty_game_array(dims)
+# Initialize the game board
+initial_game_board = wa_tor.Board(dims)
 if use_basic_setup:
-    wa_tor.initialize_game_array_randomly(initial_game_array, initial_fish, initial_sharks, breed_time, breed_energy)
+    wa_tor.initialize_game_board_randomly(initial_game_board, initial_fish, initial_sharks, breed_time, breed_energy)
 else:
-    wa_tor.initialize_game_array_circular(initial_game_array, initial_fish, initial_sharks, breed_time, breed_energy)
+    wa_tor.initialize_game_board_circular(initial_game_board, initial_fish, initial_sharks, breed_time, breed_energy)
 
 # Run the Simulation
 print("Playing game...")
-game_array_list = wa_tor.run_simulation(initial_game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=True)
+game_board_list = wa_tor.run_simulation(initial_game_board, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=True)
 print("\nSimulation finished")
 
 # Create an animation and plots
-actual_steps = len(game_array_list)
+actual_steps = len(game_board_list)
 paramater_str = wa_tor.create_simulation_paramater_str(dims, breed_time, energy_gain, breed_energy, start_energy, initial_fish, initial_sharks)
-animation_fname = f"media/TestAnimation_{paramater_str}_{actual_steps}.gif"
-plot_fname = f"media/TestPlot_{paramater_str}_{actual_steps}.png"
-wa_tor.create_simulation_animation(game_array_list, animation_fname)
-wa_tor.create_simulation_plots(game_array_list, plot_fname)
+animation_fname = f"media/BadAnimation{paramater_str}_{actual_steps}.gif"
+plot_fname = f"media/BadPlot_{paramater_str}_{actual_steps}.png"
+wa_tor.create_simulation_animation(game_board_list, animation_fname)
+wa_tor.create_simulation_plots(game_board_list, plot_fname)
