@@ -371,12 +371,6 @@ def create_random_location_sequence(dims: tuple[int, int]) -> list[tuple[int, in
         coordinates.append((i, j))
     return coordinates
 
-def choose_random_location(locs: list[tuple[int, int]]) -> tuple[int, int]:
-    """
-    Return a random location (i, j) in the given list of locations.
-    """
-    return rand.choice(locs)
-
 def generate_random_fish_time(breed_time: int) -> int:
     """
     Return a random initial time for a fish.
