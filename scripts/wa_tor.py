@@ -56,6 +56,12 @@ class Shark(Creature):
     def energy(self):
         del self._energy
 
+    def can_breed(self, breed_energy: int) -> bool:
+        """
+        Return whether the shark has enough energy to breed.
+        """
+        return self.energy > breed_energy
+
 # Class to store the board
 
 class Board:
