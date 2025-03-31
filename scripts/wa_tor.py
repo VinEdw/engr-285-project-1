@@ -229,11 +229,11 @@ def generate_random_fish_time(breed_time: int) -> int:
     """
     return rng.integers(1, breed_time, endpoint=True)
 
-def generate_random_shark_energy(breed_energy):
+def generate_random_shark_energy(breed_energy: int) -> int:
     """
     Return a random initial energy for a shark.
     """
-    return rng.integers(-breed_energy, -1, endpoint=True)
+    return rng.integers(1, breed_energy, endpoint=True)
 
 # Functions for getting useful information out of the game array
 
