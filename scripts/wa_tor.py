@@ -16,18 +16,17 @@ class Creature:
     def __repr__(self) -> str:
         return f"Creature({self.i}, {self.j})"
 
-
 class Fish(Creature):
-    def __init__(self, i: int, j: int, time: int) -> None:
-        super().__init__(i, j)
+    def __init__(self, i: int, j: int, time: int, active: bool = True) -> None:
+        super().__init__(i, j, active=active)
         self.time = time
 
     def __repr__(self) -> str:
         return f"Fish({self.i}, {self.j}, {self.time})"
 
 class Shark(Creature):
-    def __init__(self, i: int, j: int, energy: int) -> None:
-        super().__init__(i, j)
+    def __init__(self, i: int, j: int, energy: int, active: bool = True) -> None:
+        super().__init__(i, j, active=active)
         self.energy = energy
 
     def __repr__(self) -> str:
