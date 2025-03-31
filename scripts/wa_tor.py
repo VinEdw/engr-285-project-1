@@ -385,7 +385,7 @@ def list_union(list_1, list_2):
 
 # Functions for creating visualizations
 
-def create_simulation_paramater_str(dims, breed_time, energy_gain, breed_energy, start_energy, initial_fish, initial_sharks):
+def create_simulation_paramater_str(dims: list[int], breed_time: int, energy_gain: int, breed_energy: int, start_energy: int, initial_fish: int, initial_sharks: int) -> str:
     """
     Return a standardized string summarizing the simulation parameters.
     This is useful for creating file names that describe the setup.
