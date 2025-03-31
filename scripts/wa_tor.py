@@ -136,6 +136,19 @@ class Board:
                 self.creatures.pop(i)
             i -= 1
 
+    def get_empty_adjacent_locations(self, i: int, j: int) -> list[tuple[int, int]]:
+        """
+        Return a list of locations in the game board adjacent to the given location that are empty.
+        Locations are considered empty if they do not have an active creature.
+        """
+        locs = get_adjacent_locations(self.dims, i, j)
+        empty_locs = []
+        for loc in locs:
+            creature = self.get_active_creature_at_location(loc[0], loc[1])
+            if creature is None:
+                empty_locs.append(loc)
+        return empty_locs
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
