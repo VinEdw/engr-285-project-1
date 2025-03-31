@@ -383,11 +383,11 @@ def generate_random_shark_energy(breed_energy: int) -> int:
     """
     return rand.randint(1, breed_energy)
 
-# Functions for getting useful information out of the game array
+# Functions for getting useful information out of the game board
 
+def get_adjacent_locations(dims: tuple[int, int], i: int, j: int) -> list[tuple[int, int]]:
     """
-def get_adjacent_locations(game_array, i, j):
-    Return a list of locations in the game array adjacent to the given location.
+    Return a list of locations in the board with given dimensions adjacent to the given location.
     Cells are adjacent if they can be reached by moving up, down, left, or right.
     Moves at the edges of the array wrap around to the other side.
     """
@@ -395,31 +395,27 @@ def get_adjacent_locations(game_array, i, j):
     for nudge in [+1, -1]:
         for axis in [0, 1]:
             loc = [i, j]
-            loc[axis] = (loc[axis] + nudge) % game_array.shape[axis]
+            loc[axis] = (loc[axis] + nudge) % dims[axis]
             locs.append(tuple(loc))
     return locs
 
-def get_empty_adjacent_locations(game_array, i, j):
+def get_valid_fish_moves(old_board: Board, new_board: Board, i: int, j: int) -> list[tuple[int, int]]:
     """
-    Return a list of locations in the game array adjacent to the given location that are empty.
+    Return a list of locations that a fish could move to.
+    Valid locations must be adjacent to the location of the fish, and they must be empty in both the old and new board.
     """
-    locs = get_adjacent_locations(game_array, i, j)
-    empty_locs = []
-    for loc in locs:
-        if game_array[loc] == 0:
-            empty_locs.append(loc)
-    return empty_locs
+    old_locs = old_board.get_empty_adjacent_locations(i, j)
+    new_locs = new_board.get_empty_adjacent_locations(i, j)
+    return list_intersection(old_locs, new_locs)
 
-def get_fish_occupied_adjacent_locations(game_array, i, j):
+def get_preferred_shark_moves(old_board: Board, new_board: Board, i: int, j: int) -> list[tuple[int, int]]:
     """
-    Return a list of locations in the game array adjacent to the given location that are occupied by fish.
+    Return a list of locations that a shark would prefer to move to.
+    Preferred locations must be adjacent to the location of the shark, and they must have an active fish in either board.
     """
-    locs = get_adjacent_locations(game_array, i, j)
-    fish_occupied_locs = []
-    for loc in locs:
-        if game_array[loc] > 0:
-            fish_occupied_locs.append(loc)
-    return fish_occupied_locs
+    old_locs = old_board.get_fish_occupied_adjacent_locations(i, j)
+    new_locs = new_board.get_fish_occupied_adjacent_locations(i, j)
+    return list_union(old_locs, new_locs)
 
 def find_local_maxima(x_values, y_values):
     """
