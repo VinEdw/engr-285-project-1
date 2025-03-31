@@ -47,6 +47,44 @@ class Board:
     def __repr__(self) -> str:
         return f"Board({self.dims}, {self.creatures})"
 
+    def creature_count(self, creature_type) -> int:
+        """
+        Return the number of the given creature in the game board.
+        """
+        count = 0
+        for creature in self.creatures:
+            if isinstance(creature, creature_type):
+                count += 1
+        return count
+
+    def fish_count(self) -> int:
+        """
+        Return the number of fish in the game board.
+        """
+        return self.creature_count(Fish)
+
+    def shark_count(self) -> int:
+        """
+        Return the number of sharks in the game board.
+        """
+        return self.creature_count(Shark)
+
+    def everything_extinct(self) -> bool:
+        """
+        Return whether all creatures in the game board have gone died.
+        In other words, whether the fish and sharks are both extinct.
+        This happens shortly after the sharks eat all the fish.
+        """
+        return len(self.creatures) == 0
+
+    def fish_fill_board(self) -> bool:
+        """
+        Return whether all creatures in the game array are fish.
+        In other words, whether the fish have filled the board.
+        This happens shortly after the sharks go extinct.
+        """
+        return self.fish_count() == self.size()
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
@@ -257,41 +295,8 @@ def generate_random_shark_energy(breed_energy: int) -> int:
 
 # Functions for getting useful information out of the game array
 
-def count_fish(game_array):
     """
-    Return the fish count for the given game array.
-    Fish are represented by positive values, sharks by negative values, and empty spaces by 0.
-    """
-    fish_count = (game_array > 0).sum()
-    return fish_count
-
-def count_sharks(game_array):
-    """
-    Return the shark count for the given game array.
-    Fish are represented by positive values, sharks by negative values, and empty spaces by 0.
-    """
-    shark_count = (game_array < 0).sum()
-    return shark_count
-
-def check_if_everything_extinct(game_array):
-    """
-    Return whether all creatures in the game array have gone died.
-    In other words, whether the fish and sharks are both extinct.
-    """
-    empty_spaces = (game_array == 0).sum()
-    return empty_spaces == game_array.size
-
-def check_if_fish_fill_board(game_array):
-    """
-    Return whether all creatures in the game array are fish.
-    In other words, whether the fish have filled the board.
-    This happens when the sharks go extinct.
-    """
-    fish_count = count_fish(game_array)
-    return fish_count == game_array.size
-
 def get_adjacent_locations(game_array, i, j):
-    """
     Return a list of locations in the game array adjacent to the given location.
     Cells are adjacent if they can be reached by moving up, down, left, or right.
     Moves at the edges of the array wrap around to the other side.
