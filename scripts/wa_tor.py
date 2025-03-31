@@ -38,6 +38,24 @@ class Shark(Creature):
     def __repr__(self) -> str:
         return f"Shark({self.i}, {self.j}, {self.energy})"
 
+    @property
+    def energy(self):
+        return self._energy
+
+    @energy.setter
+    def energy(self, new_energy):
+        """
+        Set the energy of the shark.
+        If the energy of a shark reaches 0, deactivate the shark.
+        """
+        self._energy = new_energy
+        if new_energy <= 0:
+            self.active = False
+
+    @energy.deleter
+    def energy(self):
+        del self._energy
+
 # Class to store the board
 
 class Board:
