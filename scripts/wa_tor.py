@@ -164,19 +164,19 @@ class Board:
 
 # Functions for running the simulation
 
-def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
+def run_simulation(game_board: Board, steps: int, breed_time: int, energy_gain: int, breed_energy: int, start_energy: int, print_progress: bool = False):
     """
     Run the simulation for the given number of steps, performing all the movements, hunts, breedings, and deaths.
     If the fish population fills the board or all the sharks and fish die, terminate early.
     Pass in the relevant simulation parameters.
-    Return a list containing the game_array at each step.
+    Return a list containing the game board at each step.
     """
-    game_array_list = [game_array]
+    game_board_list = [game_board]
     percent = 0
 
     for k in range(steps):
-        game_array = step_game(game_array, breed_time, energy_gain, breed_energy, start_energy)
-        game_array_list.append(game_array)
+        game_board = step_game(game_board, breed_time, energy_gain, breed_energy, start_energy)
+        game_board_list.append(game_board)
 
         # Print the current progress if the percentage has changed
         if print_progress:
@@ -185,11 +185,11 @@ def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, sta
                 percent = new_percent
                 print(f"{percent:3}%", end="\r")
 
-        # If the array is full of fish or both species have gone extinct, stop simulating early
-        if check_if_fish_fill_board(game_array) or check_if_everything_extinct(game_array):
+        # If the board is full of fish or both species have gone extinct, stop simulating early
+        if game_board.fish_fill_board() or game_board.everything_extinct():
             break
 
-    return game_array_list
+    return game_board_list
 
 def step_game(old_array, breed_time, energy_gain, breed_energy, start_energy):
     """
