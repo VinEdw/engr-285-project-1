@@ -3,6 +3,7 @@
 import numpy as np              # Library needed for numerical functions
 import matplotlib.pyplot as plt # Library needed to plot results
 import imageio.v2 as io         # Library for converting a collection of image files to a gif
+import copy                     # Library for copying objects
 import random as rand           # Library for generating random numbers
 
 # Classes to hold the creatures (fish and sharks)
@@ -191,90 +192,108 @@ def run_simulation(game_board: Board, steps: int, breed_time: int, energy_gain: 
 
     return game_board_list
 
-def step_game(old_array, breed_time, energy_gain, breed_energy, start_energy):
+def step_game(old_board: Board, breed_time: int, energy_gain: int, breed_energy: int, start_energy: int):
     """
     Increment the simulation by 1 step, performing all the movements, hunts, breedings, and deaths.
     Pass in the relevant simulation parameters.
-    Return a new game array with the updates.
+    Return a new game board with the updates.
     """
-    # Copy the old array to avoid overwriting the original
-    old_array = old_array.copy()
-    # Create a new array to return with the updates
-    new_array = create_empty_game_array(old_array.shape)
+    # Copy the old board to avoid overwriting the original
+    old_board = copy.deepcopy(old_board)
+    # Create a new board to return with the updates
+    new_board = Board(old_board.dims)
 
-    # Visit each cell in the array in a random order
-    locs = create_random_location_sequence(old_array)
-    for loc in locs:
-        cell_value = old_array[loc]
+    # Shuffle the creature list before looping through
+    rand.shuffle(old_board.creatures)
+    for creature in old_board.creatures:
+        i = creature.i
+        j = creature.j
+
+        # Skip the loop iteration if the creature is not active
+        if not creature.active:
+            continue
 
         # Handle fish behavior
-        if cell_value > 0:
-            # Find the adjacent cells that are open in both arrays
-            old_locs = get_empty_adjacent_locations(old_array, *loc)
-            new_locs = get_empty_adjacent_locations(new_array, *loc)
-            available_locs = list_intersection(old_locs, new_locs)
+        if isinstance(creature, Fish):
+            # Find the adjacent cells that are open in both boards
+            available_locs = get_valid_fish_moves(old_board, new_board, i, j)
+
             # If there are open adjacent cells, randomly move the fish into one
             if len(available_locs) > 0:
-                chosen_loc = choose_random_location(available_locs)
+                chosen_loc = rand.choice(available_locs)
+                chosen_i = chosen_loc[0]
+                chosen_j = chosen_loc[1]
                 # Check the fish is eligible to breed
-                if cell_value > breed_time:
-                    # Place the fish in the new location, reset, and place a new fish in the old location
-                    new_array[chosen_loc] = 1
-                    new_array[loc] = 1
+                if creature.can_breed(breed_time):
+                    # Place a reset fish at the new location
+                    new_board.creatures.append(Fish(chosen_i, chosen_j, 1))
+                    # Place a child fish at the old location
+                    new_board.creatures.append(Fish(i, j, 1))
                 else:
                     # Place the fish in the new location, incrementing its time by 1
-                    new_array[chosen_loc] = cell_value + 1
+                    new_board.creatures.append(Fish(chosen_i, chosen_j, creature.time + 1))
+
             # If there are no open cells, the fish stays in place
             else:
-                new_array[loc] = cell_value
+                new_board.creatures.append(Fish(i, j, creature.time))
+
 
         # Handle shark behavior
-        elif cell_value < 0:
-            # Find the adjacent cells that contain fish in either array
-            old_locs = get_fish_occupied_adjacent_locations(old_array, *loc)
-            new_locs = get_fish_occupied_adjacent_locations(new_array, *loc)
-            available_locs = list_union(old_locs, new_locs)
+        elif isinstance(creature, Shark):
+            # Find the adjacent cells that are open in both boards
+            available_locs = get_valid_fish_moves(old_board, new_board, i, j)
+            # Find the adjacent cells that contain fish in either board
+            preferred_locs = get_preferred_shark_moves(old_board, new_board, i, j)
+
             # If there are fish occupied adjacent cells, randomly move the shark into one
-            if len(available_locs) > 0:
-                chosen_loc = choose_random_location(available_locs)
+            if len(preferred_locs) > 0:
+                chosen_loc = rand.choice(preferred_locs)
+                chosen_i = chosen_loc[0]
+                chosen_j = chosen_loc[1]
                 # Check the shark is eligible to breed
-                if cell_value < -breed_energy:
-                    # Place the shark in the new location, and place a new shark at the old location
+                if creature.can_breed(breed_energy):
                     # Share the energy from the eating the fish
-                    new_array[chosen_loc] = cell_value + start_energy - round(energy_gain / 2) + 1
-                    new_array[loc] = -start_energy - round(energy_gain / 2)
+                    shared_energy_gain = round(energy_gain / 2)
+                    # Place the shark in the new location
+                    new_energy = creature.energy + shared_energy_gain - start_energy - 1
+                    new_board.creatures.append(Shark(chosen_i, chosen_j, new_energy))
+                    # Place a new shark at the old location
+                    new_board.creatures.append(Shark(i, j, start_energy + shared_energy_gain))
+                else:
+                    # Place the shark in the new location, and give it all the energy from eating the food
+                    new_energy = creature.energy + energy_gain - 1
+                    new_board.creatures.append(Shark(chosen_i, chosen_j, new_energy))
+                # Deactivate the fish that was eaten
+                fish_eaten = old_board.get_active_creature_at_location(chosen_i, chosen_j) or new_board.get_active_creature_at_location(chosen_i, chosen_j)
+                assert fish_eaten is not None
+                fish_eaten.active = False
+
+            # If there are open adjacent cells, randomly move the shark into one
+            elif len(available_locs) > 0:
+                chosen_loc = rand.choice(available_locs)
+                chosen_i = chosen_loc[0]
+                chosen_j = chosen_loc[1]
+                # Check the shark is eligible to breed
+                if creature.can_breed(breed_energy):
+                    # Place the shark in the new location
+                    new_energy = creature.energy - start_energy - 1
+                    new_board.creatures.append(Shark(chosen_i, chosen_j, new_energy))
+                    # Place a new shark at the old location
+                    new_board.creatures.append(Shark(i, j, start_energy))
                 else:
                     # Place the shark in the new location
-                    # Give it all the energy from eating the fish
-                    new_array[chosen_loc] = cell_value - energy_gain + 1
-                # Clear the eaten fish from the old array, if it came from there
-                if old_array[chosen_loc] > 0:
-                    old_array[chosen_loc] = 0
-            # Try to move the shark randomly into an empty adjacent cell
+                    new_board.creatures.append(Shark(chosen_i, chosen_j, creature.energy - 1))
+
+            # If there are no open cells, the shark can't move and stays in place
             else:
-                # Find the adjacent cells that are open in both arrays
-                old_locs = get_empty_adjacent_locations(old_array, *loc)
-                new_locs = get_empty_adjacent_locations(new_array, *loc)
-                available_locs = list_intersection(old_locs, new_locs)
-                # If there are open adjacent cells, randomly move the shark into one
-                if len(available_locs) > 0:
-                    chosen_loc = choose_random_location(available_locs)
-                    # Check the shark is eligible to breed
-                    if cell_value < -breed_energy:
-                        # Place the shark in the new location, and place a new shark at the old location
-                        new_array[chosen_loc] = cell_value + start_energy + 1
-                        new_array[loc] = -start_energy
-                    else:
-                        # Place the shark in the new location
-                        new_array[chosen_loc] = cell_value + 1
-                # The shark can't move and stays in place
-                else:
-                    new_array[loc] = cell_value + 1
+                new_board.creatures.append(Shark(i, j, creature.energy - 1))
 
-        # Remove the creature from the old array
-        old_array[loc] = 0
+        # Deactivate the creature in the old board
+        creature.active = False
 
-    return new_array
+    # Remove inactive creatures from the new board, then return it
+    new_board.remove_inactive_creatures()
+    return new_board
 
 # Functions for game array initialization
 
