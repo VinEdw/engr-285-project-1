@@ -44,6 +44,9 @@ class Board:
     def size(self):
         return self.dims[0] * self.dims[1]
 
+    def __repr__(self) -> str:
+        return f"Board({self.dims}, {self.creatures})"
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
