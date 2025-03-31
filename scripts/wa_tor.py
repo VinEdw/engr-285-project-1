@@ -125,6 +125,17 @@ class Board:
                 return creature
         return None
 
+    def remove_inactive_creatures(self) -> None:
+        """
+        Remove the creatures that are not active from the board.
+        """
+        i = len(self.creatures) - 1
+        while i >= 0:
+            creature = self.creatures[i]
+            if not creature.active:
+                self.creatures.pop(i)
+            i -= 1
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
