@@ -109,7 +109,7 @@ class Board:
 
     def fish_fill_board(self) -> bool:
         """
-        Return whether all creatures in the game array are fish.
+        Return whether all creatures in the game board are fish.
         In other words, whether the fish have filled the board.
         This happens shortly after the sharks go extinct.
         """
