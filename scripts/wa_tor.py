@@ -3,7 +3,7 @@
 import numpy as np              # Library needed for numerical functions
 import matplotlib.pyplot as plt # Library needed to plot results
 import imageio.v2 as io         # Library for converting a collection of image files to a gif
-rng = np.random.default_rng()   # Random number generator
+import random as rand           # Library for generating random numbers
 
 # Classes to hold the creatures (fish and sharks)
 
@@ -227,7 +227,7 @@ def create_random_location_sequence(board: Board) -> list[tuple[int, int]]:
     # Randomly generate a sequence of positions in the array
     # Cells are numbered starting at 0 in the upper left corner, increasing by 1 as you move right then down
     N = board.size()
-    positions = rng.choice(N, N, replace=False)
+    positions = rand.sample(range(N), N)
     # Map each position to an (i, j) pair
     coordinates = []
     cols = board.dims[1]
@@ -241,19 +241,19 @@ def choose_random_location(locs: list[tuple[int, int]]) -> tuple[int, int]:
     """
     Return a random location (i, j) in the given list of locations.
     """
-    return tuple(rng.choice(locs))
+    return rand.choice(locs)
 
 def generate_random_fish_time(breed_time: int) -> int:
     """
     Return a random initial time for a fish.
     """
-    return rng.integers(1, breed_time, endpoint=True)
+    return rand.randint(1, breed_time)
 
 def generate_random_shark_energy(breed_energy: int) -> int:
     """
     Return a random initial energy for a shark.
     """
-    return rng.integers(1, breed_energy, endpoint=True)
+    return rand.randint(1, breed_energy)
 
 # Functions for getting useful information out of the game array
 
