@@ -307,7 +307,7 @@ def initialize_game_board_randomly(game_board: Board, initial_fish: int, initial
     initial_creatures = initial_fish + initial_sharks
     assert game_board.size() >= initial_creatures
     # Randomly place fish then sharks into the game board
-    locs = create_random_location_sequence(game_board)
+    locs = create_random_location_sequence(game_board.dims)
     for i in range(initial_creatures):
         loc = locs[i]
         if i < initial_fish:
@@ -353,18 +353,18 @@ def initialize_game_board_circular(game_board: Board, initial_fish: int, initial
 
 # Functions for randomization
 
-def create_random_location_sequence(board: Board) -> list[tuple[int, int]]:
+def create_random_location_sequence(dims: tuple[int, int]) -> list[tuple[int, int]]:
     """
     Create a list of (i, j) indices for each location in the board with given dimensions.
     Return them in a random order.
     """
-    # Randomly generate a sequence of positions in the array
+    # Randomly generate a sequence of positions in the board
     # Cells are numbered starting at 0 in the upper left corner, increasing by 1 as you move right then down
-    N = board.size()
+    N = dims[0] * dims[1]
     positions = rand.sample(range(N), N)
     # Map each position to an (i, j) pair
     coordinates = []
-    cols = board.dims[1]
+    cols = dims[1]
     for pos in positions:
         i = pos // cols
         j = pos % cols
