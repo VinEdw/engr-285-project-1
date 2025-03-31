@@ -199,7 +199,7 @@ def initialize_game_array_circular(game_array, initial_fish, initial_sharks, bre
 
 # Functions for randomization
 
-def create_random_location_sequence(board: Board) -> list[tuple[int]]:
+def create_random_location_sequence(board: Board) -> list[tuple[int, int]]:
     """
     Create a list of (i, j) indices for each location in the board with given dimensions.
     Return them in a random order.
@@ -217,7 +217,7 @@ def create_random_location_sequence(board: Board) -> list[tuple[int]]:
         coordinates.append((i, j))
     return coordinates
 
-def choose_random_location(locs: list[tuple[int]]) -> tuple[int]:
+def choose_random_location(locs: list[tuple[int, int]]) -> tuple[int, int]:
     """
     Return a random location (i, j) in the given list of locations.
     """
