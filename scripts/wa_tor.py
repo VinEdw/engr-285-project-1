@@ -24,6 +24,12 @@ class Fish(Creature):
     def __repr__(self) -> str:
         return f"Fish({self.i}, {self.j}, {self.time})"
 
+    def can_breed(self, breed_time: int) -> bool:
+        """
+        Return whether the fish has enough time to breed.
+        """
+        return self.time > breed_time
+
 class Shark(Creature):
     def __init__(self, i: int, j: int, energy: int, active: bool = True) -> None:
         super().__init__(i, j, active=active)
