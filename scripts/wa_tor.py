@@ -12,6 +12,11 @@ class Creature:
         self.i = i
         self.j = j
 
+class Fish(Creature):
+    def __init__(self, i: int, j: int, time: int) -> None:
+        super().__init__(i, j)
+        self.time = time
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
