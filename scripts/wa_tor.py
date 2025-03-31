@@ -29,6 +29,9 @@ class Shark(Creature):
         super().__init__(i, j)
         self.energy = energy
 
+    def __repr__(self) -> str:
+        return f"Shark({self.i}, {self.j}, {self.energy})"
+
 # Class to store the board
 
 class Board:
