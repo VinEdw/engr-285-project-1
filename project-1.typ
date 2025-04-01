@@ -32,6 +32,35 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 = Conditions for Good Modeling
 
+#py_script("default_parameters")
+
+#py_script("test_outcome_chances")
+
+#let outcome_chance_test(attribute) =  {
+  py_script("test_" + attribute, put_output: false)
+  figure(
+    image("media/outcome_chances_" + attribute + ".svg", width: 80%),
+    caption: [Outcome Chances vs #raw(attribute)],
+  )
+}
+
+#outcome_chance_test("breed_time")
+
+#outcome_chance_test("energy_gain")
+
+#outcome_chance_test("breed_energy")
+
+#outcome_chance_test("side_length")
+
+#outcome_chance_test("aspect_ratio")
+
+#outcome_chance_test("initial_fish")
+
+#outcome_chance_test("initial_sharks")
+
+#outcome_chance_test("start_energy")
+
+
 = Main Simulation Parameters
 
 == `breed_time`
