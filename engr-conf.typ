@@ -43,19 +43,21 @@
   doc
 }
 
-#let py_script(fname, put_fname: false) = {
+#let py_script(fname, put_fname: false, put_output: true) = {
   set raw(block: true)
 
   let script = read("scripts/" + fname + ".py")
-  let output = read("output/" + fname + ".output")
 
   if (put_fname) {
     block(sticky: true)[*#fname\.py*]
   }
   raw(script, lang: "python")
 
-  if (output.len() != 0) {
-    block(sticky: true)[*Output:*]
-    raw(output)
+  if (put_output) {
+    let output = read("output/" + fname + ".output")
+    if (output.len() != 0) {
+      block(sticky: true)[*Output:*]
+      raw(output)
+    }
   }
 }
