@@ -342,17 +342,14 @@ def find_local_maxima(x_values, y_values):
 
     return x_crit_list
 
-def calculate_critical_points(game_array_list):
+def calculate_critical_points(fish_counts, shark_counts):
     """
-    Calculate the critical points (x = a/b, y = d/c) given a list of game arrays.
+    Calculate the critical points (x = a/b, y = d/c) given lists fish and shark counts.
     When x is at a local maximum, y = d/c.
     When y is at a local maximum, x = a/b.
     To estimate the ratios, average the x or y values found at each local maxima.
     Return the estimates for (a/b, d/c).
     """
-    fish_counts = [count_fish(game_array) for game_array in game_array_list]
-    shark_counts = [count_sharks(game_array) for game_array in game_array_list]
-
     x_crit_list = find_local_maxima(fish_counts, shark_counts)
     y_crit_list = find_local_maxima(shark_counts, fish_counts)
 
@@ -431,14 +428,14 @@ def create_simulation_animation(game_array_list, fname, fps=20):
     img_data = [create_image_array(game_array) for game_array in game_array_list]
     io.mimwrite(fname, img_data, format=".gif", fps=fps)
 
-def create_simulation_plots(game_array_list, fname):
+def create_simulation_plots(fish_counts, shark_counts, fname):
     """
-    Create plots describing the simulation 
+    Create plots describing the simulation.
+    Plot the fish counts and shark counts over time, and create a phase plot of the two populations.
+    Save the plot at the given file name.
     """
-    actual_steps = len(game_array_list)
-    fish_counts = [count_fish(game_array) for game_array in game_array_list]
-    shark_counts = [count_sharks(game_array) for game_array in game_array_list]
-
+    assert len(fish_counts) == len(shark_counts)
+    actual_steps = len(fish_counts)
     fig, axes = plt.subplots(2, 1)
     fig.suptitle("Wa-Tor Populations")
 

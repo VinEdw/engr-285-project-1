@@ -42,14 +42,14 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
                 wa_tor.initialize_game_array_circular(initial_game_array, **init_params)
 
             # Run the simulation
-            game_array_list = wa_tor.run_simulation(initial_game_array, **sim_params)
+            fish_counts, shark_counts = wa_tor.run_simulation_minimal(initial_game_array, **sim_params)
 
             # Check whether fish filled the board or if sharks and fish both went extinct
             # Update the counts for these events
-            last_frame = game_array_list[-1]
-            if wa_tor.check_if_everything_extinct(last_frame):
+            size = params["dims"][0] * params["dims"][1]
+            if fish_counts[-1] + shark_counts[-1] < 0:
                 everything_extinct_count += 1
-            elif wa_tor.check_if_fish_fill_board(last_frame):
+            elif fish_counts[-1] == size:
                 fish_fill_count += 1
 
         # Store the chances of each possible outcome
