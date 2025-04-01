@@ -17,11 +17,6 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
     if params is None:
         params = default_parameters.parameters.copy()
 
-    # Calculate the board dimensions based on side length and aspect ratio
-    side_length = params["side_length"]
-    other_side = int(side_length * params["aspect_ratio"])
-    dims = [side_length, other_side]
-
     overall_chances = {
         "everything_extinct": [],
         "fish_fill_board": [],
@@ -31,6 +26,12 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
     for value in test_values:
         # Set the target parameter
         params[target_param] = value
+
+        # Calculate the board dimensions based on side length and aspect ratio
+        side_length = params["side_length"]
+        other_side = int(side_length * params["aspect_ratio"])
+        dims = [side_length, other_side]
+
         # Extract the needed parameters for later steps
         init_params = default_parameters.get_initialization_parameters(params)
         sim_params = default_parameters.get_simulation_parameters(params)
