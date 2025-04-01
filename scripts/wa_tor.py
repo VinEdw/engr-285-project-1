@@ -34,6 +34,27 @@ def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, sta
 
     return game_array_list
 
+def run_simulation_minimal(game_array, steps, breed_time, energy_gain, breed_energy, start_energy):
+    """
+    Run the simulation for the given number of steps, performing all the movements, hunts, breedings, and deaths.
+    If the fish population fills the board or all the sharks and fish die, terminate early.
+    Pass in the relevant simulation parameters.
+    Return two lists containing the fish and shark populations at each step.
+    """
+    fish_counts = [count_fish(game_array)]
+    shark_counts = [count_sharks(game_array)]
+
+    for _ in range(steps):
+        game_array = step_game(game_array, breed_time, energy_gain, breed_energy, start_energy)
+        fish_counts.append(count_fish(game_array))
+        shark_counts.append(count_sharks(game_array))
+
+        # If the array is full of fish or both species have gone extinct, stop simulating early
+        if check_if_fish_fill_board(game_array) or check_if_everything_extinct(game_array):
+            break
+
+    return fish_counts, shark_counts
+
 def step_game(old_array, breed_time, energy_gain, breed_energy, start_energy):
     """
     Increment the simulation by 1 step, performing all the movements, hunts, breedings, and deaths.
