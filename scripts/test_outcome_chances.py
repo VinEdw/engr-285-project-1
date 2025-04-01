@@ -17,6 +17,11 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
     if params is None:
         params = default_parameters.parameters.copy()
 
+    # Calculate the board dimensions based on side length and aspect ratio
+    side_length = params["side_length"]
+    other_side = int(side_length * params["aspect_ratio"])
+    dims = [side_length, other_side]
+
     overall_chances = {
         "everything_extinct": [],
         "fish_fill_board": [],
@@ -35,7 +40,7 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
 
         for _ in range(trials):
             # Initialize the game array
-            initial_game_array = wa_tor.create_empty_game_array(params["dims"])
+            initial_game_array = wa_tor.create_empty_game_array(dims)
             if params["use_basic_setup"]:
                 wa_tor.initialize_game_array_randomly(initial_game_array, **init_params)
             else:
@@ -46,7 +51,7 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
 
             # Check whether fish filled the board or if sharks and fish both went extinct
             # Update the counts for these events
-            size = params["dims"][0] * params["dims"][1]
+            size = dims[0] * dims[1]
             if fish_counts[-1] + shark_counts[-1] < 0:
                 everything_extinct_count += 1
             elif fish_counts[-1] == size:
