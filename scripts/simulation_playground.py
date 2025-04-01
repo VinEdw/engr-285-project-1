@@ -28,7 +28,7 @@ print("\nSimulation finished")
 # Create an animation and plots
 actual_steps = len(game_board_list)
 paramater_str = wa_tor.create_simulation_paramater_str(dims, breed_time, energy_gain, breed_energy, start_energy, initial_fish, initial_sharks)
-animation_fname = f"media/BadAnimation{paramater_str}_{actual_steps}.gif"
-plot_fname = f"media/BadPlot_{paramater_str}_{actual_steps}.png"
+animation_fname = f"media/TestAnimation{paramater_str}_{actual_steps}.gif"
+plot_fname = f"media/TestPlot_{paramater_str}_{actual_steps}.png"
 wa_tor.create_simulation_animation(game_board_list, animation_fname)
 wa_tor.create_simulation_plots(game_board_list, plot_fname)
