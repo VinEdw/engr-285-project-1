@@ -2,6 +2,18 @@ import wa_tor
 import default_parameters
 import matplotlib.pyplot as plt
 
+# Specify the test values to use when testing each parameter
+test_ranges = {
+    "breed_time": range(1, 15 + 1),
+    "energy_gain": range(2, 18 + 1),
+    "breed_energy": range(default_parameters.parameters["start_energy"] + 1, 25 + 1),
+    "side_length": range(40, 120 + 10, 10),
+    "aspect_ratio": [i/8 for i in range(8, 16 + 1)],
+    "initial_fish": range(200, 1000 + 50, 50),
+    "initial_sharks": range(200, 1000 + 50, 50),
+    "start_energy": range(1, default_parameters.parameters["breed_energy"] - 1),
+}
+
 def test_outcome_chances(target_param, test_values, trials, params=None):
     """
     Vary the target parameter to have the given test values.
@@ -66,7 +78,7 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
 
     return overall_chances
 
-def plot_and_test_extinction_chances(fname, target_param, test_values, trials, params=None):
+def plot_and_test_outcome_chances(fname, target_param, test_values, trials, params=None):
     """
     Run the function test_outcome_chances() with the given arguments, then plot the results.
     Save the figure at the given file name.
@@ -81,3 +93,20 @@ def plot_and_test_extinction_chances(fname, target_param, test_values, trials, p
     ax.legend()
     fig.tight_layout()
     fig.savefig(fname)
+
+def run_standard_test(target_parameter, use_basic_setup):
+    """
+    Run a standard test on the target parameter.
+    Perform 25 trials with use_basic_setup optionally toggled.
+    """
+    trials = 25
+    test_values = test_ranges[target_parameter]
+    params = default_parameters.parameters.copy()
+    params["use_basic_setup"] = use_basic_setup
+
+    if use_basic_setup:
+        fname = f"media/outcome_chances_{target_parameter}.svg"
+    else:
+        fname = f"media/outcome_chances_{target_parameter}_circular.svg"
+
+    plot_and_test_outcome_chances(fname, target_parameter, test_values, trials, params)

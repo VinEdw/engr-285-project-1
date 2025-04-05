@@ -34,7 +34,7 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 #py_script("default_parameters")
 
-#py_script("test_outcome_chances")
+#py_script("measure_outcome_chances")
 
 #let outcome_chance_test(attribute) =  {
   py_script("test_" + attribute, put_output: false)
