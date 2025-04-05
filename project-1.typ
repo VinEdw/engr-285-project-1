@@ -32,9 +32,9 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 = Conditions for Good Modeling
 
-#py_script("default_parameters")
+#py_script("default_parameters", put_output: false)
 
-#py_script("measure_outcome_chances")
+#py_script("measure_outcome_chances", put_output: false)
 
 #let outcome_chance_test(attribute) =  {
   py_script("test_" + attribute, put_output: false)
