@@ -1,14 +1,17 @@
-SCRIPTS := $(wildcard scripts/*.py)
-OUTPUT := $(SCRIPTS:scripts/%.py=output/%.output)
+SCRIPT_DIR := ./scripts
+OUTPUT_DIR := ./output
 
-project-1.pdf: project-1.typ engr-conf.typ $(OUTPUT)
+SCRIPTS := $(shell find $(SCRIPT_DIR) -type f -name '*.py')
+OUTPUTS := $(SCRIPTS:$(SCRIPT_DIR)/%.py=$(OUTPUT_DIR)/%.output)
+
+project-1.pdf: project-1.typ engr-conf.typ $(OUTPUTS)
 	typst compile $<
 
-output/%.output: scripts/%.py
-	mkdir -p output
-	mkdir -p media
+$(OUTPUT_DIR)/%.output: $(SCRIPT_DIR)/%.py
+	@mkdir -p $(dir $@)
+	@mkdir -p media
 	python $< > $@
 
 .PHONY: clean
 clean: 
-	rm output/*.output
+	rm -r $(OUTPUT_DIR)
