@@ -71,5 +71,30 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 = Circular Initialization
 
+#let outcome_chance_test_circular(attribute) =  {
+  py_script("test_" + attribute, put_output: false)
+  figure(
+    image("media/outcome_chances_" + attribute + "_circular.svg", width: 80%),
+    caption: [Outcome Chances vs #raw(attribute) (Circular Initialization)],
+  )
+}
+
+#outcome_chance_test_circular("breed_time")
+
+#outcome_chance_test_circular("energy_gain")
+
+#outcome_chance_test_circular("breed_energy")
+
+#outcome_chance_test_circular("side_length")
+
+#outcome_chance_test_circular("aspect_ratio")
+
+#outcome_chance_test_circular("initial_fish")
+
+#outcome_chance_test_circular("initial_sharks")
+
+#outcome_chance_test_circular("start_energy")
+
+
 = Extension
 
