@@ -5,11 +5,8 @@ import matplotlib.pyplot as plt
 
 # Specify the test values to use when testing each parameter
 test_ranges = {
-    # "breed_time": range(1, 6 + 1),
     "breed_time": range(1, 15 + 1),
-    # "energy_gain": range(5, 13 + 1),
     "energy_gain": range(2, 18 + 1),
-    # "breed_energy": range(default_parameters.parameters["start_energy"] + 1, 14 + 1),
     "breed_energy": range(default_parameters.parameters["start_energy"] + 1, 25 + 1),
 }
 
