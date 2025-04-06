@@ -44,19 +44,35 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
   )
 }
 
+== `breed_time`
+
 #outcome_chance_test("breed_time")
+
+== `energy_gain`
 
 #outcome_chance_test("energy_gain")
 
+== `breed_energy`
+
 #outcome_chance_test("breed_energy")
+
+== `side_length`
 
 #outcome_chance_test("side_length")
 
+== `aspect_ratio`
+
 #outcome_chance_test("aspect_ratio")
+
+== `initial_fish`
 
 #outcome_chance_test("initial_fish")
 
+== `initial_sharks`
+
 #outcome_chance_test("initial_sharks")
+
+== `start_energy`
 
 #outcome_chance_test("start_energy")
 
@@ -95,19 +111,35 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
   )
 }
 
+== `breed_time`
+
 #outcome_chance_test_circular("breed_time")
+
+== `energy_gain`
 
 #outcome_chance_test_circular("energy_gain")
 
+== `breed_energy`
+
 #outcome_chance_test_circular("breed_energy")
+
+== `side_length`
 
 #outcome_chance_test_circular("side_length")
 
+== `aspect_ratio`
+
 #outcome_chance_test_circular("aspect_ratio")
+
+== `initial_fish`
 
 #outcome_chance_test_circular("initial_fish")
 
+== `initial_sharks`
+
 #outcome_chance_test_circular("initial_sharks")
+
+== `start_energy`
 
 #outcome_chance_test_circular("start_energy")
 
