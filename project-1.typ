@@ -63,11 +63,27 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 = Main Simulation Parameters
 
+#py_script("measure_ratios", put_output: false, put_fname: true)
+
+#let lvm_ratios_test(attribute) =  {
+  py_script("test_" + attribute + "_ratios", put_output: false)
+  figure(
+    image("media/lvm_ratios_" + attribute + ".svg", width: 90%),
+    caption: [LVM Ratios vs #raw(attribute)],
+  )
+}
+
 == `breed_time`
+
+#lvm_ratios_test("breed_time")
 
 == `energy_gain`
 
+#lvm_ratios_test("energy_gain")
+
 == `breed_energy`
+
+#lvm_ratios_test("breed_energy")
 
 = Circular Initialization
 
