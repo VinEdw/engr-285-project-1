@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt # Library needed to plot results
 import imageio.v2 as io         # Library for converting a collection of image files to a gif
 rng = np.random.default_rng()   # Random number generator
 
+from matplotlib.collections import LineCollection
+
 # Functions for running the simulation
 
 def run_simulation(game_array, steps, breed_time, energy_gain, breed_energy, start_energy, print_progress=False):
@@ -446,8 +448,15 @@ def create_simulation_plots(fish_counts, shark_counts, fname):
     axes[0].set(xlabel="Time", ylabel="Population")
 
     # Plot each population against the other
-    axes[1].plot(fish_counts, shark_counts, marker=".")
+    # Create a color gradient for time
+    segs = [[(fish_counts[i], shark_counts[i]), (fish_counts[i + 1], shark_counts[i + 1])] for i in range(actual_steps - 1)]
+    line_collection = LineCollection(segs, array=range(actual_steps), cmap="inferno")
+    fig.colorbar(line_collection, ax=axes[1], label="Time")
+    axes[1].add_collection(line_collection)
     axes[1].set(xlabel="Fish Population", ylabel="Shark Population")
+    padding = 20
+    axes[1].set(xlim=(0, max(fish_counts) + padding), ylim=(0, max(shark_counts) + padding))
 
+    fig.tight_layout()
     fig.savefig(fname)
 
