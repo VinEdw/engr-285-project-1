@@ -443,7 +443,7 @@ def create_simulation_plots(fish_counts, shark_counts, fname):
     axes[0].plot(range(actual_steps), fish_counts, label="fish")
     axes[0].plot(range(actual_steps), shark_counts, label="sharks")
     axes[0].legend()
-    axes[0].set(xlabel="", ylabel="Population")
+    axes[0].set(xlabel="Time", ylabel="Population")
 
     # Plot each population against the other
     axes[1].plot(fish_counts, shark_counts, marker=".")
