@@ -3,12 +3,12 @@ import wa_tor
 # Main parameters of the simulation
 breed_time = 3          # Number of steps before a fish is capable of duplicating
 energy_gain = 4         # Additional steps granted to a shark after eating a fish
-breed_energy = 10       # Number of stored steps before a shark is capable of duplicating
+breed_energy = 15       # Number of stored steps before a shark is capable of duplicating
 
 # Other simulation parameters
-dims = (30, 40)         # Size of the simulation window
-initial_fish = 300      # Starting number of fish
-initial_sharks = 100    # Starting number of sharks
+dims = (80, 90)         # Size of the simulation window
+initial_fish = 500      # Starting number of fish
+initial_sharks = 400    # Starting number of sharks
 steps = 500             # Time duration of the simulation
 start_energy = 9        # Number of moves a child shark begins with
 use_basic_setup = True  # Whether to use a random initial distribution (or not)
