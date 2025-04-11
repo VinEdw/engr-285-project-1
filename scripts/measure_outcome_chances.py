@@ -65,7 +65,7 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
             # Check whether fish filled the board or if sharks and fish both went extinct
             # Update the counts for these events
             size = dims[0] * dims[1]
-            if fish_counts[-1] + shark_counts[-1] < 0:
+            if fish_counts[-1] + shark_counts[-1] <= 0:
                 everything_extinct_count += 1
             elif fish_counts[-1] == size:
                 fish_fill_count += 1
