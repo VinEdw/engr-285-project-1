@@ -7,7 +7,7 @@ test_ranges = {
     "breed_time": range(1, 15 + 1),
     "energy_gain": range(2, 18 + 1),
     "breed_energy": range(default_parameters.parameters["start_energy"] + 1, 25 + 1),
-    "side_length": range(40, 120 + 10, 10),
+    "board_area": range(5600, 9600 + 400, 400),
     "aspect_ratio": [i/8 for i in range(8, 16 + 1)],
     "initial_fish": range(200, 1000 + 50, 50),
     "initial_sharks": range(200, 1000 + 50, 50),
@@ -39,10 +39,12 @@ def test_outcome_chances(target_param, test_values, trials, params=None):
         # Set the target parameter
         params[target_param] = value
 
-        # Calculate the board dimensions based on side length and aspect ratio
-        side_length = params["side_length"]
-        other_side = int(side_length * params["aspect_ratio"])
-        dims = [side_length, other_side]
+        # Calculate the board dimensions based on board area and aspect ratio
+        # h*w = Area; h*Ratio = w
+        # h**2 * Ratio = Area
+        h = int((params["board_area"] / params["aspect_ratio"])**0.5)
+        w = int(h * params["aspect_ratio"])
+        dims = (h, w)
 
         # Extract the needed parameters for later steps
         init_params = default_parameters.get_initialization_parameters(params)

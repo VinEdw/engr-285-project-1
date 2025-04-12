@@ -83,10 +83,12 @@ def test_lvm_ratios(target_param, test_values, trials, params=None):
         # Set the target parameter
         params[target_param] = value
 
-        # Calculate the board dimensions based on side length and aspect ratio
-        side_length = params["side_length"]
-        other_side = int(side_length * params["aspect_ratio"])
-        dims = [side_length, other_side]
+        # Calculate the board dimensions based on board area and aspect ratio
+        # h*w = Area; h*Ratio = w
+        # h**2 * Ratio = Area
+        h = int((params["board_area"] / params["aspect_ratio"])**0.5)
+        w = int(h * params["aspect_ratio"])
+        dims = (h, w)
 
         # Extract the needed parameters for later steps
         init_params = default_parameters.get_initialization_parameters(params)

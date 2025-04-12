@@ -2,7 +2,7 @@ parameters = {
     "breed_time": 3,
     "energy_gain": 4,
     "breed_energy": 15,
-    "side_length": 80,
+    "board_area": 7200,
     "aspect_ratio": 9/8,
     "initial_fish": 500,
     "initial_sharks": 400,

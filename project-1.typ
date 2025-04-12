@@ -56,9 +56,9 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 #outcome_chance_test("breed_energy")
 
-== `side_length`
+== `board_area`
 
-#outcome_chance_test("side_length")
+#outcome_chance_test("board_area")
 
 == `aspect_ratio`
 
@@ -123,9 +123,9 @@ The solutions swirl counter-clockwise around $x = a/b$ and $y = d/c$.
 
 #outcome_chance_test_circular("breed_energy")
 
-== `side_length`
+== `board_area`
 
-#outcome_chance_test_circular("side_length")
+#outcome_chance_test_circular("board_area")
 
 == `aspect_ratio`
 
