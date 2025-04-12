@@ -7,7 +7,7 @@ test_ranges = {
     "breed_time": range(1, 15 + 1),
     "energy_gain": range(2, 18 + 1),
     "breed_energy": range(default_parameters.parameters["start_energy"] + 1, 25 + 1),
-    "board_area": range(5600, 9600 + 400, 400),
+    "board_area": range(3200, 9600 + 400, 400),
     "aspect_ratio": [i/8 for i in range(8, 16 + 1)],
     "initial_fish": range(200, 1000 + 50, 50),
     "initial_sharks": range(200, 1000 + 50, 50),
