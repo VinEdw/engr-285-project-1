@@ -11,6 +11,11 @@
 
 #image("media/thumbnail.png")
 
+// Table of contents
+#pagebreak()
+#outline()
+#pagebreak()
+
 = Lotka-Volterra Model (LVM)
 
 The Lotka-Volterra Model (LVM) models the dynamics between a predator species ($y$) and a prey species ($x$) over time ($t$).
