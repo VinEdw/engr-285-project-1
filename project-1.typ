@@ -151,9 +151,9 @@ When the `board_area` is too small, the creatures are packed more tightly and fe
 This makes it more common for the sharks to successfully eat all the fish cluster and leave none remaining, which makes both species go extinct.
 When the `board_area` gets too large, the creatures on the board get more spread out.
 This forces the sharks to travel further distances on average to find fish to eat, making it more likely that the sharks take out all fish or pass away before finding a new fish cluster.
-Thus, too small or too large a `board_area` leads to highers chances of the extinction.
+Thus, too small or too large a `board_area` leads to higher chances of the extinction.
 In other words, the LVM models the results better when the `board_area` is not too low and not too high.
-For the default parameters used, this balanced `board_area` range is about ?--?.
+For the default parameters used, this balanced `board_area` range is about 4400--6400.
 
 #pagebreak()
 
@@ -214,7 +214,7 @@ Lower `start_energy` values correspond to lower extinction chances.
 Since the `start_energy` for a newborn shark is taken from its parent, this suggests that it is better to leave most of the energy with the parent shark.
 If a parent shark just had a child, it likely just ate a fish.
 Due to the way sharks tend to form fronts that hunt down fish clusters, this puts the parent in a good position to eat another fish while the child gets put in a bad position with very few fish.
-This helps the parent shark build up more energy, making it hardier and better able to survive long enough to reach new fish clusters.
+This helps the parent shark build up more energy, making it _stronger_ and better able to survive long enough to reach new fish clusters.
 In contrast, the child gets put in a position where it is likely to die, even if it had more `start_energy`.
 In other words, increasing `start_energy` hurts the parent more than it helps the child.
 As a result, higher `start_energy` values lead to higher extinction chances.
